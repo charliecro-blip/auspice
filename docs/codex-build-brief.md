@@ -30,6 +30,7 @@ The app should not:
 - create fear around imperfect timing
 - imply every task needs a perfect election
 - turn capture into heavy data entry
+- imply users must abandon Notion, Notes, calendars, or other organizing systems
 
 The app should:
 
@@ -41,6 +42,7 @@ The app should:
 - treat timing as symbolic support, not fate
 - feel like a living almanac, not a task grinder
 - let users dump messy tasks now and sort later
+- act like a timing layer that can eventually run alongside existing systems
 
 ## Repository Context
 
@@ -50,6 +52,7 @@ Use these files as source context:
 - `docs/product-spec.md`
 - `docs/ui-wireframe-spec.md`
 - `docs/capture-dump-feature-spec.md`
+- `docs/integrations-strategy.md`
 - `docs/source-audit.md`
 - `docs/source-library.md`
 - `research/robson-electional-extraction.md`
@@ -92,6 +95,7 @@ Do not add authentication.
 Do not add database persistence.
 Do not call astrology APIs.
 Do not integrate Google Calendar yet.
+Do not integrate Notion or Notes yet.
 
 Use static/mock data.
 
@@ -402,19 +406,19 @@ Auspice can sort these later by time, energy, context, and current sky.
 
 ### 4. Parsed Preview
 
-Show captured items as cards with light inferred categories.
+Show captured items as cards with light inferred categories and source badges.
 
 Example:
 
 ```text
 write Venus post
-Inferred: Writing / creative · Mercury/Venus · this week?
+Source: Manual · Inferred: Writing / creative · Mercury/Venus · this week?
 
 ask for testimonial
-Inferred: Ask / Request / Pitch · Mercury/Venus/Jupiter · send message
+Source: Notes paste · Inferred: Ask / Request / Pitch · Mercury/Venus/Jupiter · send message
 
 clean kitchen
-Inferred: Home / Cleaning · Moon/Saturn/Mars · low-stakes cleanup
+Source: Manual · Inferred: Home / Cleaning · Moon/Saturn/Mars · low-stakes cleanup
 ```
 
 ### 5. Sort Later Actions
@@ -426,6 +430,18 @@ Buttons can be mocked:
 - Sort by context
 - Move to this week
 - Move to incubating
+
+### 6. Future Sources Card
+
+Include a small non-functional card:
+
+```text
+Sources coming later
+Google Calendar · Notion · Notes · Reminders
+
+Auspice will read from your existing systems instead of replacing them.
+For now, paste or type anything here.
+```
 
 ## Screen 3: Week
 
@@ -544,7 +560,18 @@ What’s asking for attention?
 
 This can link visually to the Capture screen.
 
-### 2. Task Sections
+### 2. Source / Integration Awareness
+
+Include a small card or filter row:
+
+```text
+Sources
+Manual · Notes paste · Notion later · Calendar later
+```
+
+This is visual only for the prototype.
+
+### 3. Task Sections
 
 Group tasks into:
 
@@ -556,11 +583,12 @@ Group tasks into:
 
 Use sample tasks from seed rules plus any mock captured items.
 
-### 3. Task Cards
+### 4. Task Cards
 
 Each task card should show:
 
 - title
+- source badge: Manual, Notes paste, Notion later, or Calendar later
 - category display name
 - planetary families
 - energy types
@@ -612,9 +640,9 @@ Include a note:
 This does not need a perfect election. A supportive window is enough unless the stakes are truly high.
 ```
 
-## Calendar Integration Direction for Later
+## Calendar / Notion / Notes Integration Direction for Later
 
-Do not implement real calendar integration yet, but show where it belongs.
+Do not implement real integrations yet, but show where they belong.
 
 The prototype may include non-functional or mocked buttons:
 
@@ -622,15 +650,22 @@ The prototype may include non-functional or mocked buttons:
 - Suggest calendar windows
 - Add wellness block
 - Protect recovery time
+- Pull from Notion later
+- Paste from Notes
+- Keep as suggestion
 
-Future calendar modes:
+Future integration modes:
 
-1. Read-only awareness
-2. Suggest-to-calendar
-3. Calendar write-back with explicit approval
-4. Rhythmic calendar population for small wellness/care tasks
+1. Manual capture
+2. Paste/import from notes
+3. Google Calendar read-only awareness
+4. Calendar write-back with explicit approval
+5. Notion read from selected databases/pages
+6. Notion write-back with explicit approval
+7. Notes export/import or share-sheet support later
+8. Other task systems later
 
-Never imply the app will auto-fill the calendar without permission.
+Never imply the app will auto-fill the calendar or modify Notion without permission.
 
 ## Implementation Notes
 
@@ -689,6 +724,13 @@ Example keyword inference:
 - record, reel, post → content_recording
 - schedule, dentist, bill → admin_logistics
 
+Add mock `source` fields to tasks:
+
+- manual
+- notes_paste
+- notion_later
+- calendar_later
+
 ### Accessibility
 
 Use readable contrast, semantic headings, and buttons. Do not rely only on glyphs/icons.
@@ -711,9 +753,10 @@ The prototype is successful if:
 - it runs locally
 - Today / Capture / Week / Tasks / Find a Time are clickable
 - Capture has a freeform dump box, metadata chips, parsed preview, and Unplaced concept
+- Capture acknowledges future Notion, Notes, and Calendar sources without implementing them
 - What Now reveals specific suggestions including tasks and care/home options
 - Week view shows a clear rhythm map
-- Tasks show category/timing/context metadata
+- Tasks show category/timing/context/source metadata
 - Find a Time exists at least as a simple mocked flow
 - visual design feels spacious and calm
 - copy avoids productivity pressure
@@ -729,6 +772,7 @@ Do not implement:
 - Moon calculations
 - Google Calendar integration
 - Notion integration
+- Notes integration
 - auth
 - persistence
 - payments
