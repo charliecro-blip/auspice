@@ -4,7 +4,7 @@
 
 Build the first static clickable prototype of **Auspice** inside `/prototype`.
 
-Auspice is a rhythm-aware astrological planning assistant. It helps users understand the quality of the current time, choose what fits now, and orient their week without turning life into a productivity machine.
+Auspice is a rhythm-aware astrological planning assistant. It helps users understand the quality of the current time, capture what is asking for attention, choose what fits now, and orient their week without turning life into a productivity machine.
 
 Core product question:
 
@@ -29,6 +29,7 @@ The app should not:
 - make astrology deterministic
 - create fear around imperfect timing
 - imply every task needs a perfect election
+- turn capture into heavy data entry
 
 The app should:
 
@@ -39,6 +40,7 @@ The app should:
 - make rest, cleanup, incubation, and home care feel legitimate
 - treat timing as symbolic support, not fate
 - feel like a living almanac, not a task grinder
+- let users dump messy tasks now and sort later
 
 ## Repository Context
 
@@ -47,6 +49,7 @@ Use these files as source context:
 - `README.md`
 - `docs/product-spec.md`
 - `docs/ui-wireframe-spec.md`
+- `docs/capture-dump-feature-spec.md`
 - `docs/source-audit.md`
 - `docs/source-library.md`
 - `research/robson-electional-extraction.md`
@@ -97,9 +100,10 @@ Use static/mock data.
 Build a single-page app with tab navigation:
 
 1. **Today**
-2. **Week**
-3. **Tasks**
-4. Optional: **Find a Time** as a simple stub or lightweight flow
+2. **Capture**
+3. **Week**
+4. **Tasks**
+5. **Find a Time**
 
 The prototype should feel complete enough to click around, but it does not need real calculations.
 
@@ -238,7 +242,7 @@ Include a prominent button or section called:
 What now?
 ```
 
-When clicked, show 2–4 recommendations from the mock task list.
+When clicked, show 2–4 recommendations from the mock task list and care/home options.
 
 Example:
 
@@ -253,6 +257,9 @@ Good for correspondence and clear, warm language.
 
 3. Study acupuncture notes
 This window supports sorting and retention, especially if you focus on one section.
+
+4. Take a 20-minute walk
+Use this as nervous system regulation, not a workout.
 
 Gentler version:
 Open the draft and make a 10-line note list.
@@ -298,7 +305,129 @@ Good for low-traction time:
 - Clean kitchen
 - Go for walk / regulate nervous system
 
-## Screen 2: Week
+## Screen 2: Capture
+
+This is a core screen, not a later add-on.
+
+The Capture screen should include:
+
+### 1. Main Dump Box
+
+Prompt:
+
+```text
+What’s asking for attention?
+```
+
+Subcopy:
+
+```text
+Dump it here. You do not have to organize it yet.
+```
+
+Textarea placeholder:
+
+```text
+write Venus post
+email client back
+clean kitchen
+study points
+walk
+ask for testimonial
+schedule dentist
+record reel if energy
+```
+
+### 2. Metadata Encouragement
+
+Show optional chips users could attach to captured items:
+
+Timeframe chips:
+
+- now
+- today
+- this week
+- next week
+- someday / incubating
+- deadline-bound
+
+Energy chips:
+
+- low energy
+- deep focus
+- creative
+- social
+- physical
+- emotional
+- logistical
+- restorative
+
+Context chips:
+
+- home
+- office
+- out and about
+- computer
+- phone
+- errands
+- outside
+- waiting on someone
+
+Task-type chips:
+
+- ask/request
+- cleanup
+- writing
+- admin
+- care
+- movement
+- publish
+
+These can be visual chips only or simple selectable state.
+
+### 3. Add to Unplaced
+
+Button:
+
+```text
+Add to Unplaced
+```
+
+When clicked, parse each line into a preview list and show:
+
+```text
+Added to Unplaced
+Auspice can sort these later by time, energy, context, and current sky.
+```
+
+### 4. Parsed Preview
+
+Show captured items as cards with light inferred categories.
+
+Example:
+
+```text
+write Venus post
+Inferred: Writing / creative · Mercury/Venus · this week?
+
+ask for testimonial
+Inferred: Ask / Request / Pitch · Mercury/Venus/Jupiter · send message
+
+clean kitchen
+Inferred: Home / Cleaning · Moon/Saturn/Mars · low-stakes cleanup
+```
+
+### 5. Sort Later Actions
+
+Buttons can be mocked:
+
+- Sort by timing
+- Sort by energy
+- Sort by context
+- Move to this week
+- Move to incubating
+
+## Screen 3: Week
 
 The Week screen should include:
 
@@ -378,6 +507,9 @@ Each session should include:
 - matching tasks
 - why it fits
 - gentler version
+- optional mocked action: “Place on calendar”
+
+The “Place on calendar” button does not need real integration yet; it can show a mock confirmation.
 
 ### 5. Not This Week
 
@@ -398,7 +530,7 @@ Keep them incubating. Choose one small tending step only if there is real space.
 
 This is a key philosophical feature.
 
-## Screen 3: Tasks
+## Screen 4: Tasks
 
 The Tasks screen should include:
 
@@ -410,18 +542,19 @@ Display:
 What’s asking for attention?
 ```
 
-A text input can exist but does not need persistence beyond local component state.
+This can link visually to the Capture screen.
 
 ### 2. Task Sections
 
 Group tasks into:
 
+- Unplaced
 - Active this week
 - Incubating
 - Waiting
 - Released / not this week
 
-Use sample tasks from seed rules.
+Use sample tasks from seed rules plus any mock captured items.
 
 ### 3. Task Cards
 
@@ -433,6 +566,8 @@ Each task card should show:
 - energy types
 - election level
 - symbolic start type, if relevant
+- context, if mocked
+- timeframe, if mocked
 - gentler version
 
 Actions can be visual buttons only:
@@ -441,10 +576,11 @@ Actions can be visual buttons only:
 - Ask when
 - Make gentler
 - Move to incubating
+- Mock place on calendar
 
 Buttons do not need full functionality yet, though simple state changes would be nice.
 
-## Screen 4: Find a Time
+## Screen 5: Find a Time
 
 This can be simple for now.
 
@@ -476,6 +612,26 @@ Include a note:
 This does not need a perfect election. A supportive window is enough unless the stakes are truly high.
 ```
 
+## Calendar Integration Direction for Later
+
+Do not implement real calendar integration yet, but show where it belongs.
+
+The prototype may include non-functional or mocked buttons:
+
+- Place on calendar
+- Suggest calendar windows
+- Add wellness block
+- Protect recovery time
+
+Future calendar modes:
+
+1. Read-only awareness
+2. Suggest-to-calendar
+3. Calendar write-back with explicit approval
+4. Rhythmic calendar population for small wellness/care tasks
+
+Never imply the app will auto-fill the calendar without permission.
+
 ## Implementation Notes
 
 ### Suggested File Structure
@@ -493,10 +649,12 @@ src/
     seedRules.json
     mockTimeWeather.ts
     mockWeek.ts
+    mockCapture.ts
   components/
     AppShell.tsx
     TimeWeatherCard.tsx
     WhatNowCard.tsx
+    CaptureDumpView.tsx
     WindowCard.tsx
     TaskCard.tsx
     DayRhythmCard.tsx
@@ -520,6 +678,17 @@ A simple helper can map current planetary hour to recommended task families:
 - Moon → rest, home, care, food, emotional processing
 - Sun → visibility, content recording, leadership
 
+A simple helper can parse capture text by line and infer rough categories using keywords.
+
+Example keyword inference:
+
+- write, draft, study → writing_study
+- email, ask, testimonial, pitch → ask_request_pitch or client_call
+- clean, kitchen, laundry → home_cleaning
+- walk, workout, gym → exercise_movement or rest_recovery
+- record, reel, post → content_recording
+- schedule, dentist, bill → admin_logistics
+
 ### Accessibility
 
 Use readable contrast, semantic headings, and buttons. Do not rely only on glyphs/icons.
@@ -540,14 +709,16 @@ Include a short `/prototype/README.md` update with:
 The prototype is successful if:
 
 - it runs locally
-- Today / Week / Tasks are clickable
-- What Now reveals useful suggestions
+- Today / Capture / Week / Tasks / Find a Time are clickable
+- Capture has a freeform dump box, metadata chips, parsed preview, and Unplaced concept
+- What Now reveals specific suggestions including tasks and care/home options
 - Week view shows a clear rhythm map
-- Tasks show category/timing metadata
+- Tasks show category/timing/context metadata
 - Find a Time exists at least as a simple mocked flow
 - visual design feels spacious and calm
 - copy avoids productivity pressure
 - rest and “Not This Week” are treated as first-class
+- calendar placement appears as a future/mocked pathway without real integration
 
 ## Do Not Build Yet
 
@@ -566,4 +737,4 @@ Do not implement:
 
 ## Final Note
 
-Favor a working, elegant, static prototype over a complex unfinished architecture. The first goal is to prove the feeling of Auspice, not the full astrology engine.
+Favor a working, elegant, static prototype over a complex unfinished architecture. The first goal is to prove the feeling of Auspice: capture what is asking for attention, understand the quality of time, and choose a fitting next step without pressure.
