@@ -52,3 +52,6 @@ button.ghost {
   padding: .2rem .6rem;
   color: var(--muted);
 }
+
+select { width: 100%; margin: .3rem 0 .7rem 0; border:1px solid var(--line); border-radius:10px; padding:.45rem .55rem; background:#fff; color:var(--ink); }
+.task-group h4 { margin: .8rem 0 .3rem 0; color: var(--muted); font-weight: 600; }
