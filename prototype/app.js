@@ -234,13 +234,19 @@ function renderWeek() {
   document.querySelectorAll(".place-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const session = btn.dataset.session || "Session";
-      document.getElementById("calendarConfirm").textContent = `${session} placed on calendar (mock).`;
+      document.getElementById("calendarConfirm").textContent = "Calendar placement mocked. Future versions will ask for approval before writing to calendar.";
     });
   });
 }
 
 function renderToday() {
-  content.innerHTML = `<div class="grid two"><section class='card'><h3>Friday, May 22</h3><p class='muted'>Austin, TX · 11:18am</p><p>A day for sorting before visibility.</p></section></div>`;
+  content.innerHTML = `<div class="grid two">
+    ${card("Friday, May 22", `<p class="muted">Austin, TX · 11:18am</p><p>A day for sorting before visibility.</p>`)}
+    ${card("Current Time Weather", `<p><strong>Mercury Hour</strong> · Moon applying to Jupiter · Moon in Virgo, waxing</p><p class="small">Mercury near the Midheaven at 11:42am. This is a good window for language, planning, study, and messages with a little more confidence behind them.</p><div class="chips"><span class="chip">writing</span><span class="chip">email</span><span class="chip">study</span><span class="chip">teaching prep</span></div><p class="small muted">Move gently around: overcommitting, making the task too big.</p>`)}
+    ${card("What Now", `<ol class="list"><li>Draft Venus in Cancer post</li><li>Send client follow-up email</li><li>Study acupuncture notes</li><li>Take a 20-minute walk for nervous system regulation</li></ol><p class="small muted"><strong>Gentler version:</strong> Open one draft and make a 10-line note list.</p>`)}
+    ${card("Coming Up", `<p><strong>11:40am–12:25pm</strong> · Mercury near MC<br/>Good for recording, writing, teaching, calls.</p><p><strong>1:10pm–2:05pm</strong> · Moon begins a void period<br/>Better for review, cleanup, rest, loose ends.</p><p><strong>4:20pm–5:15pm</strong> · Venus hour<br/>Better for design, soft outreach, relational repair.</p>`)}
+    ${card("Today's Task Matches", `<p><strong>Fits now:</strong> Draft Venus post, client follow-up, study notes</p><p><strong>Better later:</strong> Record reel, relationship text</p><p><strong>Low-traction window:</strong> Clean kitchen, review notes, rest</p>`)}
+  </div>`;
 }
 
 function render(tab) { ({ today: renderToday, capture: renderCapture, week: renderWeek, tasks: renderTasks, find: renderFind }[tab] || renderToday)(); }
